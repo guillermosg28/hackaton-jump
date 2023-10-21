@@ -1,0 +1,341 @@
+---
+openapi: 3.0.0
+info:
+  title: Hackathon Jump 2023
+  description: Services API for hackathon jump 2023
+  version: "1.0"
+servers:
+  - url: http://localhost:9595/api/v1
+tags:
+  - name: skins
+    description: Skins operations
+
+paths:
+  /skins/avaible:
+    get:
+      tags:
+        - skins
+      summary: Returns skins
+      description: Returns skins
+      operationId: listSkins
+      responses:
+        '200':
+          description: Operation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkinResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+
+  /skins/buy:
+    post:
+      tags:
+        - skins
+      summary: Buy skin
+      description: Buy skin
+      operationId: buySkin
+      requestBody:
+        description: Skin to buy
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SkinBuy'
+        required: true
+      responses:
+        '200':
+          description: Operation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+
+  /skins/myskins:
+    get:
+      tags:
+        - skins
+      summary: Returns my skins
+      description: Returns my skins
+      operationId: listMySkins
+      parameters:
+        - name: user
+          in: query
+          description: User id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Operation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSkinResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+
+  /skins/color:
+    put:
+      tags:
+        - skins
+      summary: Update color skin buy
+      description: Update color skin buy
+      operationId: updateColorSkinBuy
+      requestBody:
+        description: Skin to buy
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SkinColorUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: Operation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkinColorUpdateResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+
+  /skins/delete/{id}:
+    delete:
+      tags:
+        - skins
+      summary: Delete skin
+      description: Delete skin
+      operationId: deleteSkin
+      parameters:
+        - name: id
+          in: path
+          description: Skin id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Operation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+
+  /skins/getskin/{id}:
+    get:
+      tags:
+        - skins
+      summary: Returns skin
+      description: Returns skin
+      operationId: getSkin
+      parameters:
+        - name: id
+          in: path
+          description: Skin id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Operation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skin'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+
+components:
+  schemas:
+    BadRequest:
+      description: Malformed request
+      allOf:
+        - $ref: '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Conflict
+      allOf:
+        - $ref: '#/components/schemas/ErrorResponse'
+
+    #Request
+    SkinBuy:
+      type: object
+      properties:
+        skin_id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+          example: 2
+
+    SkinColorUpdateRequest:
+      type: object
+      properties:
+        skin_buy_id:
+          type: integer
+          example: 1
+        color:
+          type: string
+          example: "Blue"
+
+    #Response
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Error message"
+        code:
+          type: string
+          example: "Error"
+
+    SuccessResponse:
+        type: object
+        properties:
+          message:
+            type: string
+            example: "Success message"
+          code:
+            type: string
+            example: "Success"
+
+    SkinResponse:
+      type: object
+      properties:
+        skins:
+          type: array
+          items:
+            $ref: '#/components/schemas/Skin'
+
+    UserSkinResponse:
+      type: object
+      properties:
+        skin_buys:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserSkinBuy'
+
+    SkinColorUpdateResponse:
+        type: object
+        properties:
+          message:
+            type: string
+            example: "Success message"
+          code:
+            type: string
+            example: "Success"
+          skin:
+            $ref: '#/components/schemas/Skin'
+
+    #Models
+    Skin:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Skin name"
+        types:
+          type: string
+          example: "Skin type"
+        price:
+          type: number
+          example: 1.20
+        color:
+          type: string
+          example: "Blue"
+        state:
+            type: boolean
+            example: true
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "User name"
+        last_name:
+          type: string
+          example: "last name"
+
+    UserSkinBuy:
+        type: object
+        properties:
+          skin_buy_id:
+            type: integer
+            example: 1
+          skin:
+            $ref: '#/components/schemas/Skin'
+          user:
+            $ref: '#/components/schemas/User'
+
