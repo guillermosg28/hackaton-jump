@@ -1,0 +1,34 @@
+[
+  {
+    "id" : 1,
+    "name": "Skin 01",
+    "color": "Azul",
+    "price": 100,
+    "types": "Normal",
+    "state": 1
+  },
+  {
+    "id" : 2,
+    "name": "Skin 02",
+    "color": "Rojo",
+    "price": 200,
+    "types": "Normal",
+    "state": 1
+  },
+  {
+    "id" : 3,
+    "name": "Skin 03",
+    "color": "Verde",
+    "price": 300,
+    "types": "Normal",
+    "state": 1
+  },
+  {
+    "id" : 4,
+    "name": "Skin 04",
+    "color": "Amarillo",
+    "price": 400,
+    "types": "Normal",
+    "state": 1
+  }
+]
