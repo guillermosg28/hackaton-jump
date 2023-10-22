@@ -2,6 +2,15 @@
 
 Este repositorio contiene una aplicación Spring Boot que utiliza una base de datos MySQL para un hackathon llamado "Hackathon Jump". La aplicación Spring Boot se ejecuta en un contenedor Docker y se comunica con la base de datos MySQL también alojada en un contenedor Docker.
 
+## Detalle del proyecto
+- Arquitectura hexagonal
+- OpenAPI
+- Clean code
+- Principios SOLID
+- Test unitarios
+- Java 17
+- Maven
+
 ## Requisitos previos
 
 Asegurarse de tener instalados los siguientes requisitos previos en tu sistema:
