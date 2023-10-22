@@ -1,0 +1,38 @@
+version: '3'
+services:
+
+  hackathon-mysql-db:
+    image: mysql:5.7
+    container_name: hackathon-mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: hackathon
+      MYSQL_DATABASE: hackathon-jump
+      MYSQL_PASSWORD: root
+    ports:
+      - 3306:3306
+    networks:
+      hackathon:
+        aliases:
+          - mysql-db
+
+  hackathon-springboot-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "9494:9494"
+    container_name: hackathon-springboot-app
+    depends_on:
+      - hackathon-mysql-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://hackathon-mysql-db:3306/hackathon-jump
+    networks:
+      hackathon:
+        aliases:
+          - springboot-app
+
+networks:
+  hackathon:
+    name: hackathon-network
